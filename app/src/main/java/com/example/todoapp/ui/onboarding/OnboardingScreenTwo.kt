@@ -1,8 +1,7 @@
-package com.example.todoapp.ui.presentation
+package com.example.todoapp.ui.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,15 +18,17 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todoapp.R
 
+
 @Preview(showBackground = true)
 @Composable
-fun OnboardingScreenFour() {
+fun OnboardingScreenTwo() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -45,35 +46,35 @@ fun OnboardingScreenFour() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painterResource(R.drawable.onboardfour),
+                painterResource(R.drawable.onboardtwo),
                 "desc",
                 modifier = Modifier
-                    .size(400.dp)
+                    .size(300.dp)
                     .padding(top = 10.dp)
             )
-            Spacer(modifier = Modifier.padding(top = 20.dp))
+            Spacer(modifier = Modifier.padding(top = 40.dp))
             Text(
-                "You informations are\nsecure with us",
+                "Make a full schedule for\nthe whole week and stay\norganized and productive\nall days",
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp),
                 fontSize = 25.sp,
                 color = Color.White,
-                fontFamily = androidx.compose.ui.text.font.FontFamily.Default,
+                fontFamily = FontFamily.Default,
                 textAlign = TextAlign.Center
-
             )
-            Spacer(modifier = Modifier.padding(top = 130.dp))
+            Spacer(modifier = Modifier.padding(top = 205.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(R.drawable.slider_threedot), "threedot", modifier = Modifier.padding(start = 120.dp))
-
-                Image(
-                    painter = painterResource(R.drawable.done),
-                    "next_button",
-                    modifier = Modifier.size(100.dp)
-                        .padding(start = 10.dp) )
-            }
+            Image(painter = painterResource(R.drawable.slider_threedot), "threedot")
 
         }
+
+        Row(modifier = Modifier.align(Alignment.BottomEnd)) {
+            Image(
+                painter = painterResource(R.drawable.next_button),
+                "next_button",
+                modifier = Modifier.size(100.dp)
+            )
+        }
+
     }
 }
 

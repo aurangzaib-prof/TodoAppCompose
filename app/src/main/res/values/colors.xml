@@ -10,5 +10,8 @@
     <color name="splash_bg">#1253AA</color>
     <color name="bg_top_color">#1253AA</color>
     <color name="bg_bottom_color">#05243E</color>
+    <color name="auth_btn_color">#0EA5E9</color>
+    <color name="text_blue_color">#63D9F3</color>
+
 
 </resources>

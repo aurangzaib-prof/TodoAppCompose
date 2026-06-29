@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.presentation
+package com.example.todoapp.ui.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,7 @@ fun OnboardingScreenThree() {
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp),
                 fontSize = 25.sp,
                 color = Color.White,
-                fontFamily = androidx.compose.ui.text.font.FontFamily.Default,
+                fontFamily = FontFamily.Default,
                 textAlign = TextAlign.Center
 
             )

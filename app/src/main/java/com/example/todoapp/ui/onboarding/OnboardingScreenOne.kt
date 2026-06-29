@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.presentation
+package com.example.todoapp.ui.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import com.example.todoapp.R
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingScreenTwo() {
+fun OnboardingScreen1() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -41,19 +41,19 @@ fun OnboardingScreenTwo() {
             ),
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(top = 125.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painterResource(R.drawable.onboardtwo),
+                painterResource(R.drawable.todo_notepad),
                 "desc",
                 modifier = Modifier
-                    .size(300.dp)
-                    .padding(top = 10.dp)
+                    .size(500.dp)
+                    .padding(top = 90.dp)
             )
-            Spacer(modifier = Modifier.padding(top = 40.dp))
+            Spacer(modifier = Modifier.padding(top = 5.dp))
             Text(
-                "Make a full schedule for\nthe whole week and stay\norganized and productive\nall days",
+                "Plan your tasks to do, that\nway you’ll stay organized\nand you won’t skip any",
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp),
                 fontSize = 25.sp,
                 color = Color.White,
