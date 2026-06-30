@@ -1,7 +1,8 @@
-package com.example.todoapp.ui.login
+package com.example.todoapp.ui.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,14 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -27,16 +26,40 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.todoapp.R
+import com.example.todoapp.base.Home
+import com.example.todoapp.base.Login
 import com.example.todoapp.ui.components.CustomAuthButton
 import com.example.todoapp.ui.components.CustomTextField
+import com.example.todoapp.ui.signup.mvi.SignupEffect
+import com.example.todoapp.ui.signup.mvi.SignupIntent
 
-@Preview(showBackground = true)
 @Composable
-fun SignupScreen() {
+fun SignupScreen(
+    navController: NavHostController,
+    viewModel: SignupViewModel = viewModel()
+) {
+    val state by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                SignupEffect.NavigateToLogin -> {
+                    navController.navigate(Login)
+                }
+                SignupEffect.NavigateToHome -> {
+                    navController.navigate(Home) {
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                    }
+                }
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -49,8 +72,6 @@ fun SignupScreen() {
                 )
             )
     ) {
-
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,18 +79,14 @@ fun SignupScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
         ) {
-            var email by remember { mutableStateOf("") }
-
             Image(
                 painter = painterResource(R.drawable.checkmark),
-                "check",
+                contentDescription = "check",
                 modifier = Modifier
                     .size(100.dp)
                     .fillMaxWidth()
-                    .padding(start = 0.dp)
                     .align(Alignment.CenterHorizontally),
-
-                )
+            )
 
             Spacer(modifier = Modifier.padding(top = 40.dp))
             Text(
@@ -90,8 +107,8 @@ fun SignupScreen() {
 
             Spacer(modifier = Modifier.padding(top = 40.dp))
             CustomTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.name,
+                onValueChange = { viewModel.onIntent(SignupIntent.NameChanged(it)) },
                 hint = "Name",
                 leadingIcon = {
                     Icon(
@@ -102,8 +119,8 @@ fun SignupScreen() {
             Spacer(modifier = Modifier.padding(top = 17.dp))
 
             CustomTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.email,
+                onValueChange = { viewModel.onIntent(SignupIntent.EmailChanged(it)) },
                 hint = "Email",
                 leadingIcon = {
                     Icon(
@@ -114,8 +131,8 @@ fun SignupScreen() {
 
             Spacer(modifier = Modifier.padding(top = 17.dp))
             CustomTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.password,
+                onValueChange = { viewModel.onIntent(SignupIntent.PasswordChanged(it)) },
                 hint = "Password",
                 leadingIcon = {
                     Icon(
@@ -124,9 +141,11 @@ fun SignupScreen() {
                     )
                 })
             Spacer(modifier = Modifier.padding(top = 20.dp))
-            CustomAuthButton(onClick = {
-
-            }, modifier = Modifier.fillMaxWidth(), text = "Sign Up")
+            CustomAuthButton(
+                onClick = { viewModel.onIntent(SignupIntent.SignupClicked) },
+                modifier = Modifier.fillMaxWidth(),
+                text = "Sign Up"
+            )
             Spacer(modifier = Modifier.padding(top = 20.dp))
 
             Row(
@@ -145,9 +164,12 @@ fun SignupScreen() {
                     fontSize = 20.sp,
                     color = colorResource(R.color.text_blue_color),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(start = 5.dp),
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .clickable {
+                            viewModel.onIntent(SignupIntent.SigninClicked)
+                        },
                 )
-
             }
         }
     }

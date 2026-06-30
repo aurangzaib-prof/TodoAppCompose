@@ -7,10 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.todoapp.base.*
+import com.example.todoapp.ui.home.TasksScreen
+import com.example.todoapp.ui.login.LoginScreen
+import com.example.todoapp.ui.onboarding.OnboardingScreen
+import com.example.todoapp.ui.signup.SignupScreen
+import com.example.todoapp.ui.splash.SplashScreen
 import com.example.todoapp.ui.theme.TodoAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +25,31 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TodoAppTheme {
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                    NavHost(
+                        navController = navController,
+                        startDestination = Splash,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable<Splash> {
+                            SplashScreen(navController)
+                        }
+                        composable<OnboardingOne> {
+                            OnboardingScreen(navController)
+                        }
+                        composable<Login> {
+                            LoginScreen(navController)
+                        }
+                        composable<Signup> {
+                            SignupScreen(navController)
+                        }
+                        composable<Home> {
+                            TasksScreen(navController)
+                        }
+                    }
                 }
             }
         }
     }
 }
-

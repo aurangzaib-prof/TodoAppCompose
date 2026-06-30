@@ -22,17 +22,13 @@ fun CustomTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        shape = RoundedCornerShape(8.dp), // This cuts the container cleanly
+        shape = RoundedCornerShape(8.dp),
         placeholder = { Text(hint) },
         singleLine = true,
         leadingIcon = leadingIcon,
-
-        // FIX 1: Cleaned modifier (removed .border and .background)
         modifier = modifier
             .fillMaxWidth()
             .padding(10.dp),
-
-        // FIX 2: Added Material 3 native color configuration
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
