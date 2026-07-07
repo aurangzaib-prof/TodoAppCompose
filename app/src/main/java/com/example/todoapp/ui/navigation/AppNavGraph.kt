@@ -8,8 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.todoapp.ui.presentation.home.CalenderScreen
 import com.example.todoapp.ui.presentation.home.HomeScreen
-import com.example.todoapp.ui.presentation.home.TaskDetailScreen
-import com.example.todoapp.ui.presentation.home.TasksScreen
+import com.example.todoapp.ui.presentation.task_screen.TasksScreen
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavGraph(navController: NavHostController) {

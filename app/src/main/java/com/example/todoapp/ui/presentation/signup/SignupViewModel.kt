@@ -3,7 +3,7 @@ package com.example.todoapp.ui.presentation.signup
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.base.BaseViewModel
 import com.example.todoapp.data.local.datastore.PreferenceManager
-import com.example.todoapp.data.local.room.User
+import com.example.todoapp.data.local.room.auth_database.AuthEntity
 import com.example.todoapp.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
@@ -34,14 +34,14 @@ class SignupViewModel(
 
         updateState { it.copy(isLoading = true, error = null) }
 
-        val user = User(
+        val authEntity = AuthEntity(
             email = currentState.email,
             name = currentState.name,
             password = currentState.password
         )
 
         viewModelScope.launch {
-            val result = authRepository.register(user)
+            val result = authRepository.register(authEntity)
             if (result.isSuccess) {
                 preferenceManager.saveLogin(true)
                 sendEffect(SignupEffect.NavigateToHome)
