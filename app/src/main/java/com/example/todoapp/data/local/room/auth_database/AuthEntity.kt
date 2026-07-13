@@ -2,9 +2,8 @@ package com.example.todoapp.data.local.room.auth_database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.todoapp.utils.Constants
 
-@Entity(tableName = Constants.USERS_TABLE_NAME)
+@Entity(tableName = "auth_table")
 data class AuthEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int=0,

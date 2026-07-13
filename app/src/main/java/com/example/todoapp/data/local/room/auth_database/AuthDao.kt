@@ -12,10 +12,10 @@ interface AuthDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun registerUser(authEntity: AuthEntity)
 
-    @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
+    @Query("SELECT * FROM auth_table WHERE email = :email LIMIT 1")
     suspend fun getUserByEmail(email: String): AuthEntity?
 
-    @Query("SELECT * FROM users LIMIT 1")
+    @Query("SELECT * FROM auth_table LIMIT 1")
     fun getUser(): Flow<AuthEntity?>
 
 }

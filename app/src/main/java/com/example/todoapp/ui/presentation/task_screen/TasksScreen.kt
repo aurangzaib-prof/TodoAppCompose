@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -63,11 +64,8 @@ fun TasksScreen(
         mutableStateOf(false)
     }
 
-
     val sheetState = rememberModalBottomSheetState()
-
     val datePickerState = rememberDatePickerState()
-
     val timePickerState = rememberTimePickerState(
         initialHour = 12,
         initialMinute = 0,
@@ -90,7 +88,7 @@ fun TasksScreen(
             FloatingActionButton(
                 onClick = {
                     showBottomSheet = true
-                },
+                }, shape = CircleShape,
                 containerColor = colorResource(R.color.fab_color)
             ) {
                 Image(
@@ -348,7 +346,7 @@ fun TasksScreen(
                                 ),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor =
-                                    colorResource(R.color.btn_border_color)
+                                        colorResource(R.color.btn_border_color)
                                 )
                             ) {
                                 Text(

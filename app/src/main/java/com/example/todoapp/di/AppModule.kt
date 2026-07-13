@@ -2,7 +2,6 @@ package com.example.todoapp.di
 
 import androidx.room.Room
 import com.example.todoapp.data.local.datastore.PreferenceManager
-import com.example.todoapp.utils.Constants
 import com.example.todoapp.data.local.room.auth_database.AuthDatabase
 import com.example.todoapp.ui.presentation.login.LoginViewModel
 import com.example.todoapp.ui.presentation.onboarding.OnboardingViewModel
@@ -21,7 +20,7 @@ import com.example.todoapp.ui.presentation.task_screen.TodoViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 
-private val android.content.Context.dataStore by preferencesDataStore(name = Constants.DATASTORE_NAME)
+private val android.content.Context.dataStore by preferencesDataStore(name = "settings")
 val appModule = module {
     single { PreferenceManager(get()) }
     single { androidContext().dataStore }
@@ -29,8 +28,9 @@ val appModule = module {
         Room.databaseBuilder(
             androidContext(),
             AuthDatabase::class.java,
-            Constants.AUTH_DATABASE_NAME
+            "auth_db"
         )
+            .fallbackToDestructiveMigration(true)
             .build()
     }
 
@@ -38,9 +38,8 @@ val appModule = module {
         Room.databaseBuilder(
             androidContext(),
             TodoDatabase::class.java,
-            Constants.TODO_DATABASE_NAME
-        )
-            .fallbackToDestructiveMigration(true)
+            "todo_db"
+        ).fallbackToDestructiveMigration(true)
             .build()
     }
     single { get<AuthDatabase>().userDao() }
