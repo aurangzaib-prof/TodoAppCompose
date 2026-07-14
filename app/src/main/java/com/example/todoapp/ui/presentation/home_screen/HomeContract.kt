@@ -15,8 +15,10 @@ data class HomeState(
 
 sealed class HomeIntent : UiIntent {
     data class TodoClicked(val todo: TodoEntity) : HomeIntent()
+    object LogoutClicked : HomeIntent()
 }
 
 sealed class HomeEffect : UiEffect {
     data class NavigateToDetails(val todo: TodoEntity) : HomeEffect()
+    object NavigateToLogin : HomeEffect()
 }

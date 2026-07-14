@@ -2,7 +2,6 @@ package com.example.todoapp.ui.presentation.todo
 
 import com.example.todoapp.base.UiIntent
 import com.example.todoapp.data.local.room.todo_database.TodoEntity
-import com.example.todoapp.domain.model.Todo
 
 
 sealed interface TodoIntent : UiIntent {
@@ -16,6 +15,10 @@ sealed interface TodoIntent : UiIntent {
     ) : TodoIntent
     data class CompletedChanged(
         val isCompleted: Boolean
+    ) : TodoIntent
+
+  data class TodoSavedState(
+        val isSaved: Boolean
     ) : TodoIntent
 
     data class DateSelected(

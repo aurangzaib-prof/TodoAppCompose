@@ -41,6 +41,7 @@ fun SplashScreen(
                         popUpTo(Splash) { inclusive = true }
                     }
                 }
+
                 SplashEffect.NavigateToOnboarding -> {
                     navController.navigate(OnboardingOne) {
                         popUpTo(Splash) { inclusive = true }
@@ -49,7 +50,7 @@ fun SplashScreen(
             }
         }
     }
-    
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -67,7 +68,6 @@ fun SplashScreen(
                 painter = painterResource(R.drawable.checkmark), "check",
                 modifier = Modifier.size(110.dp)
             )
-
             Spacer(modifier = Modifier.padding(top = 20.dp))
             Text("Do it", fontSize = 44.sp, color = Color.White, fontFamily = FontFamily.Serif)
         }

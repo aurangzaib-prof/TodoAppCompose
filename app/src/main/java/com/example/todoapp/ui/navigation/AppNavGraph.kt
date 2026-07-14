@@ -17,10 +17,14 @@ import com.example.todoapp.data.local.room.todo_database.TodoEntity
 import com.example.todoapp.ui.presentation.settings.SettingsScreen
 import kotlinx.serialization.json.Json
 
+import com.example.todoapp.base.Home
+import com.example.todoapp.base.Login
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    outerNavController: NavHostController
 ) {
 
     NavHost(
@@ -28,14 +32,28 @@ fun AppNavGraph(
         startDestination = BottomNavItem.Home.route
     ) {
         composable(BottomNavItem.Home.route) {
-            HomeScreen(navController)
+            HomeScreen(
+                navController = navController,
+                onLogout = {
+                    outerNavController.navigate(Login) {
+                        popUpTo(Home) { inclusive = true }
+                    }
+                }
+            )
         }
         composable(BottomNavItem.Calender.route) { it ->
             CalenderScreen(navController)
         }
         composable(BottomNavItem.TaskScreen.route) { TasksScreen(navController) }
         composable(BottomNavItem.Settings.route) {
-            SettingsScreen(navController)
+            SettingsScreen(
+                navController = navController,
+                onLogout = {
+                    outerNavController.navigate(Login) {
+                        popUpTo(Home) { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable<TaskDetail> { backStackEntry ->

@@ -339,6 +339,11 @@ fun TasksScreen(
                                     coroutineScope.launch {
                                         viewModel.onIntent(TodoIntent.SaveTodo)
                                     }
+                                    if (state.isTodoSaved){
+
+                                    showBottomSheet = false
+                                    }
+
                                 },
                                 modifier = Modifier.size(
                                     170.dp,

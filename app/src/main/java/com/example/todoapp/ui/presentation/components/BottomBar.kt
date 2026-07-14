@@ -22,8 +22,7 @@ import com.example.todoapp.ui.presentation.home.MainStates
 @Composable
 fun BottomBar(
     state: MainStates,
-    onTabClicked : ( BottomNavItem) -> Unit
-    /*navController: NavHostController*/
+    onTabClicked: (BottomNavItem) -> Unit
 ) {
 
 
@@ -39,30 +38,17 @@ fun BottomBar(
         contentColor = Color.White,
         tonalElevation = 0.dp
     ) {
-/*
-        val currentDestination =
-            navController.currentBackStackEntryAsState().value?.destination*/
 
         items.forEach { item ->
 
             NavigationBarItem(
-                selected = /*currentDestination?.route == item.route*/ item == state.selectedTab,
+                selected = item == state.selectedTab,
 
                 onClick = {
 
                     onTabClicked(
                         item
                     )
-
-                 /*   navController.navigate(item.route) {
-
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-
-                        launchSingleTop = true
-                        restoreState = true
-                    }*/
                 },
 
                 icon = {

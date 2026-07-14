@@ -60,6 +60,13 @@ class HomeViewModel(
             is HomeIntent.TodoClicked -> {
                 sendEffect(HomeEffect.NavigateToDetails(intent.todo))
             }
+
+            HomeIntent.LogoutClicked -> {
+                viewModelScope.launch {
+                    preferenceManager.saveLogin(false)
+                    sendEffect(HomeEffect.NavigateToLogin)
+                }
+            }
         }
     }
 }

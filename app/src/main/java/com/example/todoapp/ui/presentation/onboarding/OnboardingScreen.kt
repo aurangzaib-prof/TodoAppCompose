@@ -126,8 +126,7 @@ fun OnboardingScreen(
                         .align(Alignment.CenterEnd)
                         .clickable {
                             coroutineScope.launch {
-                            viewModel.onIntent(OnboardingIntent.NextPage)
-
+                                viewModel.onIntent(OnboardingIntent.NextPage)
                             }
 
                         }

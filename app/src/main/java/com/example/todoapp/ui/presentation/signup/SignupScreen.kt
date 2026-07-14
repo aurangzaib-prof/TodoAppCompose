@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,30 +33,20 @@ import com.example.todoapp.ui.presentation.components.CustomAuthButton
 import com.example.todoapp.ui.presentation.components.CustomTextField
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+
 @Composable
 fun SignupScreen(
     navController: NavHostController,
-    viewModel: SignupViewModel = koinViewModel()
+    viewModel: SignupViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
-
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
-
             Log.d("effect_state", effect.toString())
-                    navController.navigate(Login)
+            navController.navigate(Login)
             state.isLoading = false
-//            when (effect) {
-//                SignupEffect.NavigateToLogin -> {
-//                }
-//                SignupEffect.NavigateToHome -> {
-//                    navController.navigate(Home) {
-//                        popUpTo(navController.graph.startDestinationId) { inclusive = true }
-//                    }
-//                }
-//            }
         }
     }
 
@@ -104,7 +96,7 @@ fun SignupScreen(
             )
 
             Spacer(modifier = Modifier.padding(top = 20.dp))
-            
+
             if (state.error != null) {
                 Text(
                     text = state.error!!,
@@ -119,9 +111,9 @@ fun SignupScreen(
                 onValueChange = {
                     coroutineScope.launch {
 
-                    viewModel.onIntent(SignupIntent.NameChanged(it))
+                        viewModel.onIntent(SignupIntent.NameChanged(it))
                     }
-                                },
+                },
                 hint = "Name",
                 leadingIcon = {
                     Icon(
@@ -136,32 +128,37 @@ fun SignupScreen(
                 onValueChange = {
                     coroutineScope.launch {
 
-                    viewModel.onIntent(SignupIntent.EmailChanged(it))
+                        viewModel.onIntent(SignupIntent.EmailChanged(it))
                     }
-                                },
+                },
                 hint = "Email",
                 leadingIcon = {
                     Icon(
                         painter = painterResource(R.drawable.email_leading_ic),
                         contentDescription = "Email Icon",
                     )
-                })
+                },
+                inputType = KeyboardType.Email,
+            )
 
             Spacer(modifier = Modifier.padding(top = 17.dp))
             CustomTextField(
                 value = state.password,
                 onValueChange = {
-                    coroutineScope.launch { viewModel.onIntent(SignupIntent.PasswordChanged(it)) }},
+                    coroutineScope.launch { viewModel.onIntent(SignupIntent.PasswordChanged(it)) }
+                },
                 hint = "Password",
                 leadingIcon = {
                     Icon(
                         painter = painterResource(R.drawable.pass_leading_ic),
                         contentDescription = "Pass Icon",
                     )
-                })
-            
+                }, inputType = KeyboardType.Password,
+                visualTransformation = PasswordVisualTransformation()
+            )
+
             Spacer(modifier = Modifier.padding(top = 20.dp))
-            
+
             if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -171,10 +168,9 @@ fun SignupScreen(
                 CustomAuthButton(
                     onClick = {
                         coroutineScope.launch {
-
-                        viewModel.onIntent(SignupIntent.SignupClicked)
+                            viewModel.onIntent(SignupIntent.SignupClicked)
                         }
-                              },
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     text = "Sign Up"
                 )
@@ -203,7 +199,7 @@ fun SignupScreen(
                         .clickable {
                             coroutineScope.launch {
 
-                            viewModel.onIntent(SignupIntent.SigninClicked)
+                                viewModel.onIntent(SignupIntent.SigninClicked)
                             }
                         },
                 )

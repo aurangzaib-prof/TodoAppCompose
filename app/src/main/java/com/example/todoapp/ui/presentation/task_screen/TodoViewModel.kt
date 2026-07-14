@@ -8,18 +8,20 @@ import com.example.todoapp.ui.presentation.todo.TodoEffect
 import com.example.todoapp.ui.presentation.todo.TodoIntent
 import com.example.todoapp.ui.presentation.todo.TodoState
 import com.example.todoapp.ui.extensions.toFormattedDate
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class TodoViewModel(
-    private val repository: MainRepository
+    private val repository: MainRepository,
 ) : BaseViewModel<TodoState, TodoIntent, TodoEffect>(
     TodoState()
 ) {
-
     init {
         getAllTodos()
     }
+
 
     override suspend fun onIntent(intent: TodoIntent) {
 
@@ -98,12 +100,18 @@ class TodoViewModel(
                 }
             }
 
+            is TodoIntent.TodoSavedState -> {
+                updateState {
+                    TodoState()
+                }
+            }
 
             TodoIntent.Cancel -> {
                 updateState {
                     TodoState()
                 }
             }
+
 
             else -> {}
         }
@@ -117,7 +125,8 @@ class TodoViewModel(
                 } else {
                     todos.filter {
                         it.title.contains(state.searchQuery, ignoreCase = true) ||
-                                (it.description?.contains(state.searchQuery, ignoreCase = true) ?: false)
+                                (it.description?.contains(state.searchQuery, ignoreCase = true)
+                                    ?: false)
                     }
                 }
             }.collect { filteredTodos ->
@@ -165,8 +174,11 @@ class TodoViewModel(
             } else {
                 repository.insertTodo(todo)
                 sendEffect(TodoEffect.ShowToast("Todo saved successfully"))
+                updateState { TodoState() }
             }
-            updateState { TodoState() }
+            updateState {
+                TodoState(isTodoSaved = true)
+            }
         }
     }
 

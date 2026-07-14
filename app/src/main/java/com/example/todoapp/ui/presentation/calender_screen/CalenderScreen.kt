@@ -70,13 +70,6 @@ fun CalenderScreen(
     viewModel: CalenderViewModel = koinViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val currentMonth = YearMonth.now()
-    val calendarState = rememberCalendarState(
-        startMonth = currentMonth.minusMonths(12),
-        endMonth = currentMonth.plusMonths(12),
-        firstVisibleMonth = currentMonth
-    )
-
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 

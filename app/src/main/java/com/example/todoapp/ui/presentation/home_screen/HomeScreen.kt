@@ -41,14 +41,20 @@ import androidx.navigation.NavHostController
 import com.example.todoapp.R
 import com.example.todoapp.base.TaskDetail
 import com.example.todoapp.ui.presentation.components.TodoCard
+import com.example.todoapp.ui.presentation.todo.TodoEffect
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.androidx.compose.koinViewModel
 
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import com.example.todoapp.base.Login
+import com.example.todoapp.base.Home
 @Composable
 fun HomeScreen(
     navController: NavHostController,
+    onLogout: () -> Unit,
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -61,10 +67,13 @@ fun HomeScreen(
                     val todoJson = Uri.encode(Json.encodeToString(effect.todo))
                     navController.navigate(TaskDetail(todoJson))
                 }
+
+                HomeEffect.NavigateToLogin -> {
+                    onLogout()
+                }
             }
         }
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,9 +81,13 @@ fun HomeScreen(
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
+        if (state.incompletedTodos.isNotEmpty()) {
+            TodoEffect.ShowToast("No task found")
+        }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = R.drawable.home_icon),
@@ -87,15 +100,15 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column(modifier = Modifier.offset(y = 6.dp)) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = state.username.ifEmpty { "User" },
+                    text = state.username.ifEmpty { "Unknown" },
                     color = Color.White,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = state.email.ifEmpty { "email@example.com" },
+                    text = state.email.ifEmpty { "unknown@example.com" },
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )
@@ -142,8 +155,6 @@ fun HomeScreen(
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-
-
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -173,66 +184,14 @@ fun HomeScreen(
                     ),
                     onClick = {
                         coroutineScope.launch {
-
                             viewModel.onIntent(
                                 HomeIntent.TodoClicked(todo)
                             )
-                        }                    }
+                        }
+                    }
                 )
             }
 
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .padding(20.dp)
-    ) {
-        Spacer(modifier = Modifier.height(40.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top
-        ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.home_icon),
-                contentDescription = "User Logo",
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(modifier = Modifier.offset(y = 6.dp)) {
-                Text(
-                    text = "Preview User",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "preview@example.com",
-                    color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 14.sp
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = "Incomplete Task!",
-            color = Color.White,
-            fontSize = 18.sp
-        )
     }
 }

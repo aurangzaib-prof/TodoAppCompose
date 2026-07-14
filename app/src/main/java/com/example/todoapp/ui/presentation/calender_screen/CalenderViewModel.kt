@@ -16,7 +16,6 @@ class CalenderViewModel(
     TodoState()
 ) {
     override suspend fun onIntent(intent: TodoIntent) {
-
         when (intent) {
             is TodoIntent.DateSelected -> {
                 updateState {
@@ -26,8 +25,6 @@ class CalenderViewModel(
                     TodoEffect.ShowToast("Date selected: ${intent.date.toFormattedDate()}")
                 )
             }
-
-
             is TodoIntent.TitleChanged -> {
                 updateState {
                     it.copy(
@@ -88,12 +85,12 @@ class CalenderViewModel(
 
             repository.insertTodo(todo)
             sendEffect(TodoEffect.ShowToast("Todo saved successfully"))
+            updateState { TodoState() }
         }
     }
 
     private suspend fun updateTodo(todo: TodoEntity) {
         sendEffect(TodoEffect.ShowToast("Todo updated successfully"))
-//        updateTodoUseCase(todo)
         repository.updateTodo(todo)
 
     }

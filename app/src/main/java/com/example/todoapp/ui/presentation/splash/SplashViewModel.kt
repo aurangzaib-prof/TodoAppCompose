@@ -16,9 +16,9 @@ sealed class SplashEffect {
 
 class SplashViewModel(
     private val preferenceManager: PreferenceManager
-) : ViewModel() {
-
-    private val _effect = MutableSharedFlow<SplashEffect>(replay = 1)
+)
+    : ViewModel() {
+    private val _effect = MutableSharedFlow<SplashEffect>(1)
     val effect: SharedFlow<SplashEffect> = _effect.asSharedFlow()
 
     init {

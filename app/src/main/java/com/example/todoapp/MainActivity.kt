@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
                             SignupScreen(navController)
                         }
                         composable<Home> {
-                            MainScreen()
+                            MainScreen(navController)
                         }
                     }
                 }

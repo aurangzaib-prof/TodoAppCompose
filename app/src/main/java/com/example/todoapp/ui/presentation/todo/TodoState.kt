@@ -9,6 +9,7 @@ data class TodoState(
     val title: String = "",
     val description: String? = null,
     val isCompleted: Boolean = false,
+    val isTodoSaved: Boolean = false,
     val selectedDate: Long? = null,
     val selectedTime: String? = null,
     val searchQuery: String = ""

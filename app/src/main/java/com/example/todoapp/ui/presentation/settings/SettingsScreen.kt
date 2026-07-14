@@ -26,9 +26,20 @@ import com.example.todoapp.R
 import com.example.todoapp.base.BaseScreen
 import com.example.todoapp.ui.presentation.components.SettingItem
 
+import androidx.compose.runtime.rememberCoroutineScope
+import com.example.todoapp.data.local.datastore.PreferenceManager
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(navController: NavHostController) {
+fun SettingsScreen(
+    navController: NavHostController,
+    onLogout: () -> Unit
+) {
+    val preferenceManager: PreferenceManager = koinInject()
+    val coroutineScope = rememberCoroutineScope()
+
     BaseScreen(
         topBar = {
             CenterAlignedTopAppBar(
@@ -80,7 +91,12 @@ fun SettingsScreen(navController: NavHostController) {
             SettingItem(
                 iconRes = R.drawable.logout_icon,
                 title = "Logout",
-                onClick = {  },
+                onClick = {
+                    coroutineScope.launch {
+                        preferenceManager.saveLogin(false)
+                        onLogout()
+                    }
+                },
                 isLast = true
             )
         }

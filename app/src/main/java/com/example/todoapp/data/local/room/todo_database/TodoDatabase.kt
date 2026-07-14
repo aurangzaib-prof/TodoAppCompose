@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [TodoEntity::class],
-    version = 2
+    version = 1
 )
 abstract class TodoDatabase : RoomDatabase() {
     abstract fun todoDao(): TodoDao

@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,8 +42,8 @@ import java.time.ZoneId
 @Composable
 fun AddTaskDialogue(
     value: String,
-    onValueChange: (String) -> Unit,
     isCompleted: Boolean = false,
+    onValueChange: (String) -> Unit,
     onCheckedChange: (Boolean) -> Unit = {},
     saveClicked: () -> Unit = {},
 
@@ -56,7 +57,8 @@ fun AddTaskDialogue(
     ) {
 
         Text(
-            "Set Task", fontSize = 18.sp,
+            stringResource(R.string.set_task),
+            fontSize = 18.sp,
             modifier = Modifier.padding(10.dp, top = 20.dp), color = Color.Black
         )
 

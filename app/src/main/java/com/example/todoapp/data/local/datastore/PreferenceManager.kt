@@ -15,7 +15,6 @@ class PreferenceManager(
     private val dataStore: DataStore<Preferences>
 ) {
     companion object {
-        private val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         private val IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
         private val USER_EMAIL = stringPreferencesKey("user_email")
     }
@@ -41,19 +40,6 @@ class PreferenceManager(
             }
     }
 
-    fun onboardingCompleted(): Flow<Boolean> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
-            }
-            .map { preferences ->
-                preferences[ONBOARDING_COMPLETED] ?: false
-            }
-    }
 
     fun isLoggedIn(): Flow<Boolean> {
         return dataStore.data

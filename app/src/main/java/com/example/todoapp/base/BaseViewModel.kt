@@ -16,7 +16,6 @@ abstract class BaseViewModel
     (
     initialState: S
 ) : ViewModel(), MviViewModel<S, I, E> {
-
     private val _uiState = MutableStateFlow(initialState)
     override val uiState: StateFlow<S> = _uiState.asStateFlow()
 

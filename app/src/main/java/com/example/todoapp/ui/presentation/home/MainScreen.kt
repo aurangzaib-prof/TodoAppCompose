@@ -27,6 +27,7 @@ import org.koin.androidx.compose.koinViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen(
+     outerNavController: NavHostController,
      viewModel: MainViewModel = koinViewModel()
 ) {
     val navController = rememberNavController()
@@ -57,7 +58,7 @@ fun MainScreen(
     ) { padding ->
 
         Box(modifier = Modifier.padding(bottom = padding.calculateBottomPadding())) {
-            AppNavGraph(navController)
+            AppNavGraph(navController, outerNavController)
         }
     }
 }
